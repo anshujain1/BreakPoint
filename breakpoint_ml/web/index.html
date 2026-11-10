@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BreakPoint</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF1F3;--sf:#fff;--ink:#12203A;--ink2:#56657C;--line:#D3DCE2;--teal:#1F7A78;--rose:#D8325A;--amber:#B97F0E;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#0C1626;--sf:#142238;--ink:#E6EEF5;--ink2:#97A8BE;--line:#27395A;--teal:#4FC3BE;--rose:#FF5C80;--amber:#F0B84A;color-scheme:dark}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.5 "Instrument Sans",system-ui,sans-serif}
+.app{display:grid;grid-template-columns:340px 1fr;min-height:100vh}
+@media(max-width:900px){.app{grid-template-columns:1fr}}
+aside{background:var(--sf);border-right:1px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:18px}
+.brand{font:800 22px "Bricolage Grotesque",sans-serif;letter-spacing:-.02em}.brand i{display:inline-block;width:.46em;height:.46em;background:var(--rose);margin:0 .12em;transform:rotate(45deg)}
+h2{font:700 13px "Instrument Sans";color:var(--ink2);margin:0 0 8px}
+main{padding:28px clamp(18px,3vw,40px) 60px;min-width:0}
+.drop{display:block;border:1.5px dashed var(--line);border-radius:12px;padding:14px;cursor:pointer;transition:.15s}
+.drop:hover,.drop:focus-within{border-color:var(--rose)}.drop.has{border-style:solid;border-color:var(--teal)}
+.drop b{display:block;font-weight:600}.drop span{font-size:13px;color:var(--ink2)}.drop input{position:absolute;opacity:0;width:1px;height:1px}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;padding:3px;margin-bottom:10px}
+.seg button{flex:1;border:0;background:none;color:var(--ink2);font:500 13px inherit;font-family:inherit;padding:7px;border-radius:8px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+select,input[type=range]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px}
+input[type=range]{padding:0;accent-color:var(--rose);border:0;background:none}
+label{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);margin:10px 0 4px}label output{color:var(--ink);font-weight:600}
+.btn{width:100%;border:0;border-radius:10px;padding:12px;font:600 15px inherit;font-family:inherit;background:var(--rose);color:#fff;cursor:pointer}
+.btn:disabled{opacity:.5;cursor:wait}.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line);font-weight:500;padding:9px;font-size:14px}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px}
+.hist button{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;cursor:pointer}
+.hist button:hover,.hist button[aria-current=true]{background:var(--bg)}.hist small{color:var(--ink2)}
+.card{background:var(--sf);border:1px solid var(--line);border-radius:14px;padding:20px;margin-top:16px}
+.verdict{font:800 clamp(26px,3.4vw,40px)/1.08 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;max-width:26ch;margin:6px 0 10px}
+.tag{display:inline-block;font-size:13px;font-weight:600;border-radius:99px;padding:3px 11px;background:var(--bg);color:var(--ink2)}
+.tag.bad{background:var(--rose);color:#fff}.tag.ok{background:var(--teal);color:var(--bg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+.kpis div{background:var(--sf);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpis b{display:block;font:800 28px/1.1 "Bricolage Grotesque",sans-serif;font-variant-numeric:tabular-nums}.kpis span{font-size:13px;color:var(--ink2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:1100px){.grid2{grid-template-columns:1fr}}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}th{text-align:left;font-weight:600;color:var(--ink2);font-size:13px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line)}td.n{text-align:right}.tbl{overflow-x:auto}
+.fmap{display:grid;grid-template-columns:140px repeat(3,1fr);gap:4px;font-size:13px}.fmap>*{padding:9px 6px;border-radius:7px;text-align:center}.fmap .h{color:var(--ink2);font-weight:600;padding:0 0 4px}.fmap .r{text-align:left;padding-left:0}
+.feat{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:14px}.feat i{width:20px;color:var(--ink2);font-style:normal;font-size:12px}.feat.hit b{color:var(--rose)}
+svg text{font:11px "Instrument Sans";fill:var(--ink2)}
+.bar{height:6px;background:var(--line);border-radius:3px;min-width:60px}.bar i{display:block;height:100%;background:var(--rose);border-radius:3px}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:14px 0 8px}.prog i{display:block;height:100%;background:var(--rose);transition:width .4s}
+.err{color:var(--rose);font-weight:500}.empty{padding:60px 0;color:var(--ink2);max-width:52ch}.empty h1{font:800 34px/1.1 "Bricolage Grotesque";color:var(--ink);margin:0 0 12px;letter-spacing:-.02em}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}.note{font-size:13px;color:var(--ink2)}
+.log{background:var(--bg);border-radius:8px;padding:10px;font:12px/1.55 ui-monospace,Menlo,monospace;white-space:pre-wrap;max-height:190px;overflow:auto;margin:10px 0 0;color:var(--ink2)}.dl{display:block;text-align:center;text-decoration:none;margin-top:14px;padding:11px}</style></head><body><div class="app">
+<aside>
+<div class="brand">Break<i></i>Point</div>
+<form id="f" style="display:grid;gap:16px">
+<div><h2>Model</h2><div class="seg"><button type="button" id="mu" aria-pressed="true">Upload mine</button><button type="button" id="mt" aria-pressed="false">Train one for me</button></div>
+<label class="drop" id="dm"><input type="file" id="model" accept=".joblib,.pkl,.pickle"><b id="dmt">Trained model file</b><span id="dms">.joblib or .pkl, any classifier with predict()</span></label>
+<div id="tr" hidden><select id="mn" aria-label="Model type"></select></div></div>
+<div><h2>Data</h2><label class="drop" id="dc"><input type="file" id="csv" accept=".csv"><b id="dct">CSV with a target column</b><span id="dcs">Held-out rows the model has not trained on</span></label>
+<label for="tg" style="margin-top:12px">Target column</label><select id="tg" disabled><option>Choose a CSV first</option></select></div>
+<div><h2>Search</h2><label for="bd">Tests to run <output id="bdo">100</output></label><input id="bd" type="range" min="40" max="300" step="10" value="100">
+<label for="ta">A failure is an accuracy drop of</label><select id="ta"><option value="0.05">5 points</option><option value="0.1" selected>10 points</option><option value="0.15">15 points</option><option value="0.2">20 points</option></select></div>
+<button class="btn" id="go" type="submit">Find the breakpoint</button>
+<button class="btn ghost" id="sm" type="button">Try a sample (breast cancer, random forest)</button>
+<p class="note" id="msg" role="alert" style="margin:0"></p>
+</form>
+<div class="hist"><h2>Runs</h2><div id="hist"></div></div>
+</aside>
+<main id="main"><div class="empty"><h1>How gently can your model be broken?</h1><p>Upload a trained classifier and a held-out CSV. BreakPoint searches for the cheapest perturbation that costs you accuracy, and shows what broke it, how cheaply, and which features were involved.</p></div></main></div>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const FAM={gaussian_noise:'Gaussian noise',feature_dropout:'Missing values',mean_shift:'Mean shift',scale_distortion:'Unit / scale drift',outliers:'Outlier spikes',quantization:'Coarse rounding',correlated_noise:'Shared noise',feature_shuffle:'Feature-block shuffle'};
+const TGT={important:'most important features',unimportant:'least important features',random:'random features'};
+const fam=k=>FAM[k]||k,pct=v=>Math.round(v*100),c3=v=>v.toFixed(3);
+let mode='upload',cur=null,timer=null;
+fetch('/api/meta').then(r=>r.json()).then(m=>$('#mn').innerHTML=m.models.map(x=>`<option ${x==='rf'?'selected':''}>${x}</option>`).join(''));
+function setMode(m){mode=m;$('#mu').setAttribute('aria-pressed',m==='upload');$('#mt').setAttribute('aria-pressed',m==='train');$('#dm').hidden=m!=='upload';$('#tr').hidden=m!=='train'}
+$('#mu').onclick=()=>setMode('upload');$('#mt').onclick=()=>setMode('train');
+$('#model').onchange=e=>{const f=e.target.files[0];$('#dm').classList.toggle('has',!!f);if(f){$('#dmt').textContent=f.name;$('#dms').textContent=(f.size/1024).toFixed(0)+' KB'}};
+$('#csv').onchange=async e=>{const f=e.target.files[0];if(!f)return;$('#dc').classList.add('has');$('#dct').textContent=f.name;const fd=new FormData();fd.append('csv',f);
+try{const r=await (await fetch('/api/columns',{method:'POST',body:fd})).json();$('#tg').disabled=false;$('#tg').innerHTML=r.columns.map(c=>`<option>${esc(c)}</option>`).join('');$('#tg').value=r.columns[r.columns.length-1];$('#dcs').textContent=r.columns.length+' columns'}catch{$('#msg').textContent='Could not read that CSV.'}};
+$('#bd').oninput=e=>$('#bdo').textContent=e.target.value;
+async function start(fd){$('#go').disabled=$('#sm').disabled=true;$('#msg').textContent='';
+for(const [k,v] of [['budget',$('#bd').value],['tau',$('#ta').value]])fd.append(k,v);
+try{const r=await fetch('/api/runs',{method:'POST',body:fd}),j=await r.json();if(!r.ok)throw Error(j.error);watch(j.id)}catch(e){$('#msg').innerHTML=`<span class="err">${esc(e.message)}</span>`;$('#go').disabled=$('#sm').disabled=false}}
+$('#f').onsubmit=e=>{e.preventDefault();const fd=new FormData(),csv=$('#csv').files[0],mdl=$('#model').files[0];
+if(!csv)return $('#msg').innerHTML='<span class="err">Choose a CSV first.</span>';
+if(mode==='upload'&&!mdl)return $('#msg').innerHTML='<span class="err">Choose a model file, or switch to “Train one for me”.</span>';
+fd.append('csv',csv);fd.append('target',$('#tg').value);if(mode==='upload')fd.append('model',mdl);else fd.append('model_name',$('#mn').value);start(fd)};
+$('#sm').onclick=()=>{const fd=new FormData();fd.append('dataset','breast_cancer');fd.append('model_name','rf');start(fd)};
+let shown='',fixKey='';
+function watch(id){cur=id;shown='';clearInterval(timer);const tick=async()=>{const d=await (await fetch('/api/runs/'+id)).json();if(cur!==id)return;const k=id+d.status;
+if(d.status!=='done'||k!==shown){render(d);fixKey=''}shown=k;if(d.status==='done')renderFix(d);
+const busy=d.status==='done'?(d.fix&&d.fix.status==='running'):d.status!=='error';if(!busy){clearInterval(timer);$('#go').disabled=$('#sm').disabled=false}hist()};tick();timer=setInterval(tick,700)}
+async function hist(){const l=await (await fetch('/api/runs')).json();$('#hist').innerHTML=l.length?l.map(r=>`<button data-id="${r.id}" ${r.id===cur?'aria-current="true"':''}><span>${esc(r.name)}</span><small>${r.status==='done'?'done':r.status==='error'?'failed':r.n_evals+'/'+r.budget}</small></button>`).join(''):'<p class="note">No runs yet.</p>';
+document.querySelectorAll('#hist button').forEach(b=>b.onclick=()=>watch(b.dataset.id))}hist();
+const p1=v=>(v*100).toFixed(1);
+async function runFix(id){const fd=new FormData(),t=$('#trn');if(t){if(!t.files[0])return $('#fxm').textContent='Choose the training CSV first.';fd.append('train',t.files[0])}
+$('#fx').disabled=true;const r=await fetch(`/api/runs/${id}/fix`,{method:'POST',body:fd}),j=await r.json();if(!r.ok){$('#fx').disabled=false;return $('#fxm').textContent=j.error}watch(id)}
+function renderFix(d){let b=$('#fixbox');if(!b){$('#main').insertAdjacentHTML('beforeend','<div id="fixbox"></div>');b=$('#fixbox');fixKey=''}
+const f=d.fix,k=f?f.status+f.log.length:'none';if(k===fixKey)return;fixKey=k;
+const big=t=>`<div class="verdict" style="font-size:26px">${t}</div>`;let h='<div class="card"><h2>Fix it</h2>';
+if(!f){h+=big('Can a fix make it harder to break?')+`<p class="note" style="max-width:62ch">BreakPoint retrains your model with stress-test augmentation and a feature-subspace ensemble, tests each candidate on a validation gate, and keeps one only if it passes. ${d.need_train?'It retrains a copy of your model, so it needs the data the model was trained on.':''}</p>${d.need_train?'<label class="drop" id="dt" style="margin:12px 0;max-width:420px"><input type="file" id="trn" accept=".csv"><b id="dtt">Training CSV</b><span>Same columns and target as the held-out CSV</span></label>':''}<button class="btn" id="fx" style="width:auto;padding:10px 24px;margin-top:10px">Try fixes</button><p class="note err" id="fxm"></p>`}
+else if(f.status==='running')h+=big('Trying fixes')+`<div class="prog"><i style="width:${Math.min(95,6+f.log.length*13)}%"></i></div><p class="note">Searching, training candidates and checking the gate. This takes a few minutes on larger data.</p><pre class="log">${f.log.map(esc).join('\n')}</pre>`;
+else if(f.status==='error')h+=`<p class="err">${esc(f.error)}</p>`;
+else{const x=f.result,g=x.gentle_fail,dl=g[1]-g[0],rc=x.ref_cost;
+const tag=!x.accepted?['No fix kept','']:dl<-1e-4?['Fix helped on test','ok']:dl>1e-4?['Kept, but test got worse','bad']:['Kept, no change on test',''];
+const head=!x.accepted?'No fix passed the gate, so your model is unchanged.':dl<-1e-4?`Failures on gentle stress tests fell from ${p1(g[0])}% to ${p1(g[1])}%.`:dl>1e-4?`Failures on gentle stress tests rose from ${p1(g[0])}% to ${p1(g[1])}% on held-out data.`:`Failures on gentle stress tests stayed at ${p1(g[0])}%.`;
+const st=c=>c.accepted?'Kept':c.eligible?'Passed, not best':'Rejected';
+h+=`<span class="tag ${tag[1]}">${tag[0]}</span>`+big(head)+`<p class="note" style="max-width:70ch;margin:0">${x.accepted?'Recipe: '+esc(x.recipe)+'. ':''}${esc(x.decision)}</p>
+<div class="kpis"><div><b>${p1(g[0])}% → ${p1(g[1])}%</b><span>gentle tests that fail, on test data</span></div><div><b>${p1(x.clean_test[0])}% → ${p1(x.clean_test[1])}%</b><span>clean accuracy on test data</span></div>${rc[0]!=null?`<div><b>${c3(rc[0])} → ${c3(rc[1])}</b><span>cheapest failure cost on test (higher is sturdier)</span></div>`:''}<div><b>${x.n_train[0]} → ${x.n_train[1]}</b><span>training rows</span></div></div>
+<div class="tbl" style="margin-top:16px"><table><thead><tr><th>Candidate</th><th class="n">Gate failures</th><th class="n">Clean val acc.</th><th>Result</th></tr></thead><tbody>${x.candidates.map(c=>`<tr><td>${c.name.replace(/_/g,' ')}</td><td class="n">${p1(c.gate_failure_rate)}%</td><td class="n">${p1(c.clean_val)}%</td><td><b>${st(c)}</b></td></tr>`).join('')}</tbody></table></div>
+<p class="note" style="margin-top:12px;max-width:74ch">The gate only sees validation data (${x.n_val} rows). The test numbers above come from a separate split of ${x.n_test} rows that the fix never touched, so trust those. In BreakPoint’s own 108-run grid, 6 of 28 accepted fixes still made gentle-test failures worse. "Gentle" means stress tests with cost 0.25 or less.${d.need_train?' The baseline is a retrained copy of your model on the training CSV, so it can differ slightly from the file you uploaded.':''}</p>
+${x.accepted?(f.downloadable?`<a class="btn dl" href="/api/runs/${d.id}/fixed.joblib" download>Download fixed model (.joblib)</a><p class="note">Takes the same raw features as your original model.</p>`:'<p class="note">Export is only available for uploaded models.</p>'):''}`}
+b.innerHTML=h+'</div>';const fx=$('#fx');if(fx)fx.onclick=()=>runFix(d.id);const t=$('#trn');if(t)t.onchange=e=>{const q=e.target.files[0];$('#dt').classList.toggle('has',!!q);if(q)$('#dtt').textContent=q.name}}
+function render(d){const m=$('#main');
+if(d.status==='error')return m.innerHTML=`<div class="card"><h2>${esc(d.name)}</h2><p class="err">${esc(d.error)}</p></div>`;
+if(d.status!=='done'){const p=d.status==='searching'?d.n_evals/d.budget*100:3;return m.innerHTML=`<div class="card"><h2>${esc(d.name)}</h2><div class="verdict">${d.status==='searching'?'Searching for the cheapest failure':'Scoring feature importance'}</div><div class="prog" role="progressbar" aria-valuenow="${Math.round(p)}"><i style="width:${p}%"></i></div><p class="note">${d.n_evals} of ${d.budget} tests run · ${d.n_failed} failures so far</p></div>`}
+const r=d.result,b=r.breakpoint,cost=r.breakpoint?r.breakpoint.cost:null;
+const band=!b?['No failure found','ok']:cost<.05?['Fragile','bad']:cost<.15?['Brittle under shift','bad']:['Held up well','ok'];
+const verdict=b?`${fam(b.family)} on ${pct(b.coverage)}% of ${TGT[b.target]} cuts accuracy by ${pct(b.drop)} points.`:`No ${pct(r.tau)}-point failure found in ${r.n_evals} tests.`;
+m.innerHTML=`<div class="row"><h2 style="margin:0">${esc(d.name)}</h2><div><button class="btn ghost" id="dl" style="width:auto;padding:7px 14px">Download JSON</button></div></div>
+<div class="card" style="margin-top:12px"><span class="tag ${band[1]}">${band[0]}</span><div class="verdict">${verdict}</div>
+<p class="note" style="margin:0">${b?`Severity ${b.severity} × coverage ${b.coverage} = cost ${c3(b.cost)} (cheapest of ${r.n_failures} failures found). Lower cost means easier to break. Costs are only comparable within one run.`:'Raise the search budget or lower the failure threshold to look harder.'}</p></div>
+<div class="kpis"><div><b>${(r.clean*100).toFixed(1)}%</b><span>clean accuracy</span></div><div><b>${b?c3(b.cost):'–'}</b><span>breakpoint cost</span></div><div><b>${r.n_failures}/${r.n_evals}</b><span>tests that failed</span></div><div><b>${r.n_rows}×${r.n_features}</b><span>rows × features</span></div><div><b>${r.seconds}s</b><span>search time</span></div></div>
+<div class="grid2"><div class="card"><h2>Failure map: cheapest failure by perturbation and target</h2><div class="fmap" id="fm"></div><p class="note" style="margin:10px 0 0">Darker rose means a cheaper break. A dash means nothing failed in the tests run there.</p></div>
+<div class="card"><h2>Search trace: cost of each test</h2><svg id="tr" viewBox="0 0 520 250" width="100%" role="img" aria-label="Cost of each test over the search"></svg></div></div>
+<div class="grid2"><div class="card"><h2>Cheapest failures</h2><div class="tbl"><table><thead><tr><th>Perturbation</th><th>Target</th><th class="n">Sev.</th><th class="n">Cov.</th><th class="n">Cost</th><th class="n">Drop</th></tr></thead><tbody>${r.failures.map(f=>`<tr><td>${fam(f.family)}</td><td>${f.target}</td><td class="n">${f.severity}</td><td class="n">${f.coverage}</td><td class="n">${c3(f.cost)}</td><td class="n">−${pct(f.drop)} pts</td></tr>`).join('')||'<tr><td colspan="6">None</td></tr>'}</tbody></table></div></div>
+<div class="card"><h2>Most important features${b?' (rose = hit at the breakpoint)':''}</h2>${r.ranked_features.map((n,i)=>`<div class="feat ${r.breakpoint_cols.includes(n)?'hit':''}"><i>${i+1}</i><b style="font-weight:500">${esc(n)}</b></div>`).join('')}<p class="note" style="margin:8px 0 0">Ranked by permutation importance on your data.</p></div></div>`;
+const fm=$('#fm');fm.innerHTML='<div class="h r"></div>'+Object.keys(TGT).map(t=>`<div class="h">${t}</div>`).join('');
+Object.keys(FAM).forEach(k=>{fm.insertAdjacentHTML('beforeend',`<div class="r">${FAM[k]}</div>`);Object.keys(TGT).forEach(t=>{const g=r.grid.find(x=>x.family===k&&x.target===t),c=g&&g.cheapest;
+const a=c==null?0:Math.max(.12,1-c*1.6);fm.insertAdjacentHTML('beforeend',`<div title="${g?g.fails+' of '+g.n+' tests failed':'not tested'}" style="background:${c==null?'var(--bg)':`color-mix(in srgb,var(--rose) ${Math.round(a*70)}%,var(--sf))`}">${c==null?'–':c3(c)}</div>`)})});
+const s=$('#tr'),L=34,Wd=470,T=10,H=200,X=i=>L+(i-1)/Math.max(1,r.n_evals-1)*Wd,Y=v=>T+(1-Math.min(v,1))*H,A=(t,at)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in at)e.setAttribute(k,at[k]);s.appendChild(e);return e};
+[0,.25,.5,.75,1].forEach(v=>{A('line',{x1:L,x2:L+Wd,y1:Y(v),y2:Y(v),stroke:'var(--line)'});A('text',{x:L-6,y:Y(v)+4,'text-anchor':'end'}).textContent=v});
+let best=1,pth='';r.trace.forEach(p=>{if(p.failed&&p.cost<best)best=p.cost;pth+=(pth?'L':'M')+X(p.i)+' '+Y(best)});
+r.trace.forEach(p=>{const e=A('circle',{cx:X(p.i),cy:Y(p.cost),r:p.failed?4:3,fill:p.failed?'var(--rose)':'var(--ink2)',opacity:p.failed?1:.35});A('title',{},e)});
+A('path',{d:pth,fill:'none',stroke:'var(--rose)','stroke-width':2});A('text',{x:L+Wd/2,y:238,'text-anchor':'middle'}).textContent='test number (rose = failure; line = cheapest failure so far)';
+$('#dl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(r,null,1)],{type:'application/json'}));a.download='breakpoint-'+d.id+'.json';a.click()}}
+</script></body></html>
