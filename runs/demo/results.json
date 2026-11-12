@@ -1,0 +1,823 @@
+{
+  "breast_cancer_rf": {
+    "fix": {
+      "tau": 0.1,
+      "budget": 100,
+      "strategy": "surrogate",
+      "rounds": [
+        {
+          "round": 0,
+          "recipe": "baseline",
+          "n_train": 284,
+          "clean_val": 0.9507042253521126,
+          "clean_test": 0.9370629370629371,
+          "breakpoint_cost": 0.1081849,
+          "n_failures": 15,
+          "battery_mean_score": 0.8822843822843822,
+          "battery_failure_rate": 0.19583333333333333,
+          "battery_low_cost_failure_rate": 0.07534246575342465,
+          "repair_rate": null,
+          "diagnosis": {
+            "family:correlated_noise": 0.8666666666666666,
+            "target:important": 0.7333333333333333,
+            "target:unimportant": 0.13333333333333333,
+            "target:random": 0.13333333333333333,
+            "family:mean_shift": 0.06666666666666667,
+            "family:gaussian_noise": 0.06666666666666667
+          },
+          "candidates": [
+            {
+              "name": "targeted_augmentation",
+              "gate_failure_rate": 0.03,
+              "clean_val": 0.9507042253521126,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "random_augmentation",
+              "gate_failure_rate": 0.06,
+              "clean_val": 0.9295774647887324,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "feature_subspace",
+              "gate_failure_rate": 0.06,
+              "clean_val": 0.9366197183098591,
+              "eligible": false,
+              "accepted": false
+            }
+          ],
+          "decision": "No candidate passed the gate (needs >= 2% fewer failures and at most 1.5% clean-accuracy loss on validation); model unchanged.",
+          "top_failures": [
+            {
+              "family": "correlated_noise",
+              "target": "unimportant",
+              "severity": 0.1205,
+              "coverage": 0.8978,
+              "cost": 0.1081849,
+              "drop": 0.10563380281690138
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.171,
+              "coverage": 0.6523,
+              "cost": 0.11154330000000001,
+              "drop": 0.11971830985915488
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1582,
+              "coverage": 0.7105,
+              "cost": 0.1124011,
+              "drop": 0.10563380281690138
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1587,
+              "coverage": 0.7118,
+              "cost": 0.11296266,
+              "drop": 0.11267605633802813
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1524,
+              "coverage": 0.7433,
+              "cost": 0.11327892,
+              "drop": 0.11267605633802813
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1645,
+              "coverage": 0.695,
+              "cost": 0.1143275,
+              "drop": 0.13380281690140838
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1352,
+              "coverage": 0.8472,
+              "cost": 0.11454143999999998,
+              "drop": 0.11267605633802813
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.1318,
+              "coverage": 0.8703,
+              "cost": 0.11470554,
+              "drop": 0.10563380281690138
+            }
+          ]
+        },
+        {
+          "round": 1,
+          "recipe": "baseline",
+          "n_train": 284,
+          "clean_val": 0.9507042253521126,
+          "clean_test": 0.9370629370629371,
+          "breakpoint_cost": 0.11262735,
+          "n_failures": 7,
+          "battery_mean_score": 0.8822843822843822,
+          "battery_failure_rate": 0.19583333333333333,
+          "battery_low_cost_failure_rate": 0.07534246575342465,
+          "repair_rate": 0.8,
+          "diagnosis": {
+            "target:random": 0.857142857142857,
+            "family:feature_shuffle": 0.5714285714285714,
+            "target:unimportant": 0.14285714285714285,
+            "family:correlated_noise": 0.14285714285714285,
+            "family:gaussian_noise": 0.14285714285714285,
+            "family:mean_shift": 0.14285714285714285
+          },
+          "candidates": [
+            {
+              "name": "targeted_augmentation",
+              "gate_failure_rate": 0.043333333333333335,
+              "clean_val": 0.9436619718309859,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "random_augmentation",
+              "gate_failure_rate": 0.043333333333333335,
+              "clean_val": 0.9577464788732394,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "feature_subspace",
+              "gate_failure_rate": 0.056666666666666664,
+              "clean_val": 0.9577464788732394,
+              "eligible": false,
+              "accepted": false
+            }
+          ],
+          "decision": "No candidate passed the gate (needs >= 2% fewer failures and at most 1.5% clean-accuracy loss on validation); model unchanged.",
+          "top_failures": [
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.2013,
+              "coverage": 0.5595,
+              "cost": 0.11262735,
+              "drop": 0.11267605633802813
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.2072,
+              "coverage": 0.5801,
+              "cost": 0.12019671999999999,
+              "drop": 0.11267605633802813
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.2243,
+              "coverage": 0.5651,
+              "cost": 0.12675193,
+              "drop": 0.16901408450704225
+            },
+            {
+              "family": "correlated_noise",
+              "target": "unimportant",
+              "severity": 0.3256,
+              "coverage": 0.481,
+              "cost": 0.1566136,
+              "drop": 0.10563380281690138
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.2582,
+              "coverage": 0.6143,
+              "cost": 0.15861225999999998,
+              "drop": 0.13380281690140838
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "random",
+              "severity": 0.4955,
+              "coverage": 0.9827,
+              "cost": 0.48692785,
+              "drop": 0.1619718309859155
+            },
+            {
+              "family": "mean_shift",
+              "target": "random",
+              "severity": 0.6485,
+              "coverage": 0.8674,
+              "cost": 0.5625089,
+              "drop": 0.5774647887323943
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "recipe": "baseline",
+          "n_train": 284,
+          "clean_val": 0.9507042253521126,
+          "clean_test": 0.9370629370629371,
+          "breakpoint_cost": 0.11120640000000001,
+          "n_failures": 8,
+          "battery_mean_score": 0.8822843822843822,
+          "battery_failure_rate": 0.19583333333333333,
+          "battery_low_cost_failure_rate": 0.07534246575342465,
+          "repair_rate": 0.4285714285714286,
+          "diagnosis": {
+            "target:random": 0.75,
+            "family:correlated_noise": 0.5,
+            "family:feature_shuffle": 0.375,
+            "target:unimportant": 0.125,
+            "target:important": 0.125,
+            "family:outliers": 0.125
+          },
+          "candidates": [],
+          "decision": "",
+          "top_failures": [
+            {
+              "family": "correlated_noise",
+              "target": "random",
+              "severity": 0.1448,
+              "coverage": 0.768,
+              "cost": 0.11120640000000001,
+              "drop": 0.11971830985915488
+            },
+            {
+              "family": "correlated_noise",
+              "target": "random",
+              "severity": 0.1487,
+              "coverage": 0.7993,
+              "cost": 0.11885591,
+              "drop": 0.13380281690140838
+            },
+            {
+              "family": "correlated_noise",
+              "target": "random",
+              "severity": 0.191,
+              "coverage": 0.7929,
+              "cost": 0.15144390000000002,
+              "drop": 0.16901408450704225
+            },
+            {
+              "family": "correlated_noise",
+              "target": "random",
+              "severity": 0.3125,
+              "coverage": 0.8328,
+              "cost": 0.26025,
+              "drop": 0.2183098591549295
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.9257,
+              "coverage": 0.5238,
+              "cost": 0.48488166000000005,
+              "drop": 0.37323943661971826
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "unimportant",
+              "severity": 0.8635,
+              "coverage": 0.5836,
+              "cost": 0.5039386,
+              "drop": 0.33098591549295775
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.6016,
+              "coverage": 0.8759,
+              "cost": 0.52694144,
+              "drop": 0.10563380281690138
+            },
+            {
+              "family": "feature_shuffle",
+              "target": "random",
+              "severity": 0.8868,
+              "coverage": 0.7118,
+              "cost": 0.63122424,
+              "drop": 0.28873239436619713
+            }
+          ]
+        }
+      ],
+      "reference_before": {
+        "min_cost": 0.07460775,
+        "fail_fraction": 0.176,
+        "n_evals": 1800
+      },
+      "reference_after": {
+        "min_cost": 0.07460775,
+        "fail_fraction": 0.176,
+        "n_evals": 1800
+      }
+    },
+    "reference": {
+      "min_cost": 0.046644,
+      "fail_fraction": 0.17,
+      "n_evals": 3000
+    },
+    "benchmark": {
+      "random": {
+        "final_cost_mean": 0.17885524199999997,
+        "final_cost_sd": 0.022952088442112103,
+        "evals_to_near_ref": [
+          101,
+          101,
+          101,
+          101,
+          101
+        ],
+        "failures_found": [
+          19,
+          18,
+          19,
+          15,
+          20
+        ],
+        "seconds": [
+          0.6337766647338867,
+          0.9461045265197754,
+          0.9264407157897949,
+          0.5878174304962158,
+          0.5891053676605225
+        ]
+      },
+      "bandit": {
+        "final_cost_mean": 0.19810918000000002,
+        "final_cost_sd": 0.04461031104195396,
+        "evals_to_near_ref": [
+          101,
+          101,
+          101,
+          101,
+          101
+        ],
+        "failures_found": [
+          33,
+          33,
+          28,
+          23,
+          27
+        ],
+        "seconds": [
+          0.5898551940917969,
+          0.5891211032867432,
+          0.5910851955413818,
+          0.6597228050231934,
+          0.7105445861816406
+        ]
+      },
+      "surrogate": {
+        "final_cost_mean": 0.10149499799999999,
+        "final_cost_sd": 0.011241245513899963,
+        "evals_to_near_ref": [
+          78,
+          101,
+          46,
+          101,
+          101
+        ],
+        "failures_found": [
+          15,
+          16,
+          13,
+          13,
+          15
+        ],
+        "seconds": [
+          6.150004863739014,
+          6.632844686508179,
+          6.710356950759888,
+          6.2812416553497314,
+          6.954995632171631
+        ]
+      }
+    }
+  },
+  "wine_svm": {
+    "fix": {
+      "tau": 0.1,
+      "budget": 100,
+      "strategy": "surrogate",
+      "rounds": [
+        {
+          "round": 0,
+          "recipe": "baseline",
+          "n_train": 89,
+          "clean_val": 1.0,
+          "clean_test": 0.9777777777777777,
+          "breakpoint_cost": 0.04580000000000001,
+          "n_failures": 19,
+          "battery_mean_score": 0.8094444444444445,
+          "battery_failure_rate": 0.48333333333333334,
+          "battery_low_cost_failure_rate": 0.2534246575342466,
+          "repair_rate": null,
+          "diagnosis": {
+            "target:important": 0.6842105263157894,
+            "family:outliers": 0.5789473684210527,
+            "target:unimportant": 0.15789473684210525,
+            "family:scale_distortion": 0.15789473684210525,
+            "target:random": 0.15789473684210525,
+            "family:gaussian_noise": 0.10526315789473684,
+            "family:correlated_noise": 0.10526315789473684,
+            "family:mean_shift": 0.05263157894736842
+          },
+          "candidates": [
+            {
+              "name": "targeted_augmentation",
+              "gate_failure_rate": 0.08666666666666667,
+              "clean_val": 0.9772727272727273,
+              "eligible": true,
+              "accepted": true
+            },
+            {
+              "name": "random_augmentation",
+              "gate_failure_rate": 0.12333333333333334,
+              "clean_val": 0.9772727272727273,
+              "eligible": true,
+              "accepted": false
+            },
+            {
+              "name": "feature_subspace",
+              "gate_failure_rate": 0.21666666666666667,
+              "clean_val": 1.0,
+              "eligible": true,
+              "accepted": false
+            }
+          ],
+          "decision": "Accepted targeted_augmentation: gentle-config failure rate on validation 24.3% -> 8.7%.",
+          "top_failures": [
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.458,
+              "coverage": 0.1,
+              "cost": 0.04580000000000001,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "outliers",
+              "target": "unimportant",
+              "severity": 0.4778,
+              "coverage": 0.1,
+              "cost": 0.04778,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.4788,
+              "coverage": 0.1,
+              "cost": 0.047880000000000006,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.487,
+              "coverage": 0.1,
+              "cost": 0.0487,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.4874,
+              "coverage": 0.1,
+              "cost": 0.048740000000000006,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.5174,
+              "coverage": 0.1,
+              "cost": 0.05174,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "outliers",
+              "target": "unimportant",
+              "severity": 0.5298,
+              "coverage": 0.1,
+              "cost": 0.052980000000000006,
+              "drop": 0.15909090909090906
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.5509,
+              "coverage": 0.1,
+              "cost": 0.05509,
+              "drop": 0.18181818181818177
+            }
+          ]
+        },
+        {
+          "round": 1,
+          "recipe": "targeted_augmentation(r1)",
+          "n_train": 241,
+          "clean_val": 0.9772727272727273,
+          "clean_test": 0.9777777777777777,
+          "breakpoint_cost": 0.07541,
+          "n_failures": 13,
+          "battery_mean_score": 0.860462962962963,
+          "battery_failure_rate": 0.3958333333333333,
+          "battery_low_cost_failure_rate": 0.1643835616438356,
+          "repair_rate": 0.4736842105263158,
+          "diagnosis": {
+            "family:gaussian_noise": 0.7692307692307692,
+            "target:important": 0.6923076923076923,
+            "target:random": 0.23076923076923078,
+            "family:feature_shuffle": 0.07692307692307693,
+            "family:mean_shift": 0.07692307692307693,
+            "target:unimportant": 0.07692307692307693,
+            "family:scale_distortion": 0.07692307692307693
+          },
+          "candidates": [
+            {
+              "name": "targeted_augmentation",
+              "gate_failure_rate": 0.11,
+              "clean_val": 0.9772727272727273,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "random_augmentation",
+              "gate_failure_rate": 0.11666666666666667,
+              "clean_val": 0.9772727272727273,
+              "eligible": false,
+              "accepted": false
+            },
+            {
+              "name": "feature_subspace",
+              "gate_failure_rate": 0.12,
+              "clean_val": 0.9545454545454546,
+              "eligible": false,
+              "accepted": false
+            }
+          ],
+          "decision": "No candidate passed the gate (needs >= 2% fewer failures and at most 2.3% clean-accuracy loss on validation); model unchanged.",
+          "top_failures": [
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.7541,
+              "coverage": 0.1,
+              "cost": 0.07541,
+              "drop": 0.15909090909090906
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.7609,
+              "coverage": 0.1,
+              "cost": 0.07609,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.7675,
+              "coverage": 0.1,
+              "cost": 0.07675,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.7686,
+              "coverage": 0.1,
+              "cost": 0.07686,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.7811,
+              "coverage": 0.1,
+              "cost": 0.07811000000000001,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.8396,
+              "coverage": 0.1,
+              "cost": 0.08396,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.9459,
+              "coverage": 0.1,
+              "cost": 0.09459000000000001,
+              "drop": 0.18181818181818188
+            },
+            {
+              "family": "gaussian_noise",
+              "target": "important",
+              "severity": 0.9653,
+              "coverage": 0.1,
+              "cost": 0.09653,
+              "drop": 0.13636363636363635
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "recipe": "targeted_augmentation(r1)",
+          "n_train": 241,
+          "clean_val": 0.9772727272727273,
+          "clean_test": 0.9777777777777777,
+          "breakpoint_cost": 0.05217000000000001,
+          "n_failures": 14,
+          "battery_mean_score": 0.860462962962963,
+          "battery_failure_rate": 0.3958333333333333,
+          "battery_low_cost_failure_rate": 0.1643835616438356,
+          "repair_rate": 0.5384615384615384,
+          "diagnosis": {
+            "target:important": 0.6428571428571427,
+            "family:outliers": 0.2857142857142857,
+            "family:correlated_noise": 0.2857142857142857,
+            "target:random": 0.2857142857142857,
+            "family:feature_shuffle": 0.21428571428571427,
+            "family:feature_dropout": 0.14285714285714285,
+            "family:quantization": 0.07142857142857142,
+            "target:unimportant": 0.07142857142857142
+          },
+          "candidates": [],
+          "decision": "",
+          "top_failures": [
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.5217,
+              "coverage": 0.1,
+              "cost": 0.05217000000000001,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "outliers",
+              "target": "important",
+              "severity": 0.5407,
+              "coverage": 0.1025,
+              "cost": 0.05542174999999999,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.7026,
+              "coverage": 0.1,
+              "cost": 0.07026,
+              "drop": 0.11363636363636365
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.7394,
+              "coverage": 0.1,
+              "cost": 0.07393999999999999,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "correlated_noise",
+              "target": "important",
+              "severity": 0.7764,
+              "coverage": 0.1,
+              "cost": 0.07764,
+              "drop": 0.13636363636363635
+            },
+            {
+              "family": "outliers",
+              "target": "random",
+              "severity": 0.4947,
+              "coverage": 0.331,
+              "cost": 0.1637457,
+              "drop": 0.15909090909090906
+            },
+            {
+              "family": "correlated_noise",
+              "target": "random",
+              "severity": 0.3125,
+              "coverage": 0.8328,
+              "cost": 0.26025,
+              "drop": 0.18181818181818188
+            },
+            {
+              "family": "quantization",
+              "target": "important",
+              "severity": 0.6759,
+              "coverage": 0.4805,
+              "cost": 0.32476995,
+              "drop": 0.11363636363636365
+            }
+          ]
+        }
+      ],
+      "reference_before": {
+        "min_cost": 0.022906799999999998,
+        "fail_fraction": 0.5306666666666666,
+        "n_evals": 1800
+      },
+      "reference_after": {
+        "min_cost": 0.04446456,
+        "fail_fraction": 0.434,
+        "n_evals": 1800
+      }
+    },
+    "reference": {
+      "min_cost": 0.039772010000000003,
+      "fail_fraction": 0.5264,
+      "n_evals": 2995
+    },
+    "benchmark": {
+      "random": {
+        "final_cost_mean": 0.07331622800000001,
+        "final_cost_sd": 0.011934782383374068,
+        "evals_to_near_ref": [
+          13,
+          57,
+          9,
+          22,
+          75
+        ],
+        "failures_found": [
+          54,
+          52,
+          53,
+          46,
+          60
+        ],
+        "seconds": [
+          0.07459807395935059,
+          0.09692239761352539,
+          0.0930624008178711,
+          0.07546448707580566,
+          0.07417106628417969
+        ]
+      },
+      "bandit": {
+        "final_cost_mean": 0.08089727,
+        "final_cost_sd": 0.009139185089251668,
+        "evals_to_near_ref": [
+          40,
+          101,
+          33,
+          40,
+          81
+        ],
+        "failures_found": [
+          54,
+          56,
+          54,
+          54,
+          58
+        ],
+        "seconds": [
+          0.0758359432220459,
+          0.08666872978210449,
+          0.07756495475769043,
+          0.11785340309143066,
+          0.13290190696716309
+        ]
+      },
+      "surrogate": {
+        "final_cost_mean": 0.054796,
+        "final_cost_sd": 0.00770732534670751,
+        "evals_to_near_ref": [
+          13,
+          18,
+          9,
+          63,
+          65
+        ],
+        "failures_found": [
+          23,
+          23,
+          23,
+          11,
+          17
+        ],
+        "seconds": [
+          5.960023403167725,
+          5.405053377151489,
+          5.0112292766571045,
+          5.7542243003845215,
+          5.638516664505005
+        ]
+      }
+    }
+  }
+}
