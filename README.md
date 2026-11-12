@@ -23,6 +23,17 @@ xgboost, lightgbm, catboost). Everything runs offline.
 nonlinear, multiclass (generated), or **any CSV** via `--csv/--target` (categoricals one-hot encoded, rows with
 missing values dropped).
 
+## Web app
+
+```
+python -m breakpoint_ml.server      # http://127.0.0.1:8000
+```
+
+Upload a trained classifier (`.joblib` / `.pkl`) and a held-out CSV, or let BreakPoint train a built-in model on your CSV.
+It finds the cheapest failure, then **Fix it** runs the propose-verify-accept loop. For an uploaded model it retrains a
+`sklearn.base.clone` of it on the training CSV you provide, and the accepted fix can be downloaded as a `.joblib`
+pipeline that takes your raw features. Local use only: loading a `.joblib` runs code, so only upload models you trust.
+
 ## How it works
 
 **Stress tests.** A test is `(family, severity, coverage, target)`:
